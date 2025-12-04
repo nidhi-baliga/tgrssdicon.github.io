@@ -133,7 +133,10 @@ if (loginBtn) {
             alert('That email address is invalid. Please check and try again.');
             break;
           case 'auth/too-many-requests':
-            alert('Too many attempts. Please try again later or reset your password.');
+            alert('Too many attempts. Please try again later or click "Forgot Password".');
+            break;
+          case 'auth/invalid-login-credentials':
+            alert('Incorrect email or password. Please re-enter, or click "Forgot Password".');
             break;
           default:
             alert(error.message || 'Login failed. Please try again.');
