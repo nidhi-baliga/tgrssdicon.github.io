@@ -12,17 +12,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
-  <style>
-    /* small local styles to make the dashboard clean */
-    body { font-family: Arial, Helvetica, sans-serif; margin:0; padding:2rem; background:#fff; color:#111; }
-    .box { max-width:720px; margin:2rem auto; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.08); padding:2rem; }
-    .user-field { margin-bottom:1rem; font-size:1rem; }
-    .label { color:#666; font-size:0.85rem; margin-bottom:.25rem; display:block; }
-    .big-btn { display:inline-block; margin:0.5rem 0; padding:12px 18px; background:#024f6b; color:#fff; border-radius:8px; text-decoration:none; }
-    .ghost { background:#e9eef0; color:#024f6b; border: none; }
-    .top-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
-    .small { font-size:0.9rem; color:#666; }
-  </style>
 </head>
 <body>
   <div class="box">
@@ -33,7 +22,7 @@
 
     <div id="user-info">
       <div class="user-field">
-        <span class="label">Full name</span>
+        <span class="label">Full Name</span>
         <div id="user-fullname" class="small">—</div>
       </div>
 
@@ -74,8 +63,8 @@
   const backHomeBtn = document.getElementById('back-home');
 
   // Set your Google Form URL and submission placeholder URL here:
-  fillFormBtn.href = 'https://forms.gle/YOUR_GOOGLE_FORM_ID';
-  paperPosterBtn.href = '#'; // placeholder
+  fillFormBtn.href = 'hhttps://forms.gle/VbGUHJnMw4TgSBV19';
+  //paperPosterBtn.href = '#'; //placeholder
 
   // Redirect to login if not authenticated
   auth.onAuthStateChanged(user => {
