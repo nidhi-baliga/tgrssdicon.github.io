@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Dashboard — TGRSSDI 2026</title>
+
+  <!-- Styles: reuse your existing stylesheet if you want -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <style>
+    /* small local styles to make the dashboard clean */
+    body { font-family: Arial, Helvetica, sans-serif; margin:0; padding:2rem; background:#fff; color:#111; }
+    .box { max-width:720px; margin:2rem auto; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.08); padding:2rem; }
+    .user-field { margin-bottom:1rem; font-size:1rem; }
+    .label { color:#666; font-size:0.85rem; margin-bottom:.25rem; display:block; }
+    .big-btn { display:inline-block; margin:0.5rem 0; padding:12px 18px; background:#024f6b; color:#fff; border-radius:8px; text-decoration:none; }
+    .ghost { background:#e9eef0; color:#024f6b; border: none; }
+    .top-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+    .small { font-size:0.9rem; color:#666; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="top-row">
+      <h2>Welcome</h2>
+      <div id="signout-wrap"><a href="#" id="logout-btn" class="big-btn ghost">Log out</a></div>
+    </div>
+
+    <div id="user-info">
+      <div class="user-field">
+        <span class="label">Full name</span>
+        <div id="user-fullname" class="small">—</div>
+      </div>
+
+      <div class="user-field">
+        <span class="label">Email</span>
+        <div id="user-email" class="small">—</div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <a id="fill-form" class="big-btn" target="_blank" rel="noopener">Fill Registration Form</a>
+      <a id="paper-poster" class="big-btn" style="margin-left:0.5rem;">Paper & Poster Submission</a>
+      <a id="back-home" class="big-btn ghost" style="margin-left:0.5rem;">Back to Home</a>
+    </div>
+  </div>
+
+<script>
+  // 1) Firebase config — USE the same config you used in main.js
+  const firebaseConfig = {
+    apiKey: "AIzaSyCb6I_YlWQGJJIiswMtowLdWoXXI1yU02k", 
+    authDomain: "tgrssdi-auth.firebaseapp.com",   // e.g. tgrssdi-auth.firebaseapp.com 
+    projectId: "tgrssdi-auth",
+    storageBucket: "tgrssdi-auth.firebasestorage.app",
+    messagingSenderId: "1050877324976",
+    appId: "1:1050877324976:web:f2ba89d3edb0b912acd575"
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const auth = firebase.auth();
+
+  const fullnameEl = document.getElementById('user-fullname');
+  const emailEl = document.getElementById('user-email');
+  const logoutBtn = document.getElementById('logout-btn');
+  const fillFormBtn = document.getElementById('fill-form');
+  const paperPosterBtn = document.getElementById('paper-poster');
+  const backHomeBtn = document.getElementById('back-home');
+
+  // Set your Google Form URL and submission placeholder URL here:
+  fillFormBtn.href = 'https://forms.gle/YOUR_GOOGLE_FORM_ID';
+  paperPosterBtn.href = '#'; // placeholder
+
+  // Redirect to login if not authenticated
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      // not signed in — redirect to login
+      window.location.href = 'index.html';
+      return;
+    }
+    // user signed in — show info
+    fullnameEl.textContent = user.displayName || '(Name not provided)';
+    emailEl.textContent = user.email || '(No email)';
+
+    // Optionally make buttons visible here if hidden
+  });
+
+  // Logout
+  logoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    auth.signOut().then(() => {
+      window.location.href = 'index.html';
+    });
+  });
+
+  // Back to home button goes to your main site
+  backHomeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'https://www.tgrssdi2026.com/';
+  });
+</script>
+</body>
+</html>

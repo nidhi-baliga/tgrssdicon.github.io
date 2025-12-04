@@ -55,57 +55,93 @@ const loginBtn = document.getElementById('login-submit');
 
 const abstractLink = document.getElementById('abstract-link');
 
-// 4) Signup handler
+/* 4) Signup handler (replace existing signup handler) */
 if (signupBtn) {
   signupBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    const email = signupEmailInput?.value || '';
+    const email = signupEmailInput?.value?.trim() || '';
     const password = signupPasswordInput?.value || '';
+    const name = signupNameInput?.value?.trim() || '';
 
     if (!email || !password) {
-      alert('Please enter email and password.');
+      alert('Please enter an email and a password.');
       return;
     }
 
     auth.createUserWithEmailAndPassword(email, password)
       .then((userCred) => {
         console.log('Signed up:', userCred.user.uid);
-        // Optional: save display name in user profile
-        const name = signupNameInput?.value || '';
+        // Save display name then redirect
         if (name) {
-          return userCred.user.updateProfile({ displayName: name });
+          return userCred.user.updateProfile({ displayName: name })
+            .then(() => {
+              // redirect after profile update
+              window.location.href = 'dashboard.html';
+            });
+        } else {
+          window.location.href = 'dashboard.html';
         }
       })
       .catch((error) => {
         console.error(error);
-        alert(error.message);
+        // Friendly messages by error code
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            alert('An account with this email already exists. Try logging in or using a different email.');
+            break;
+          case 'auth/invalid-email':
+            alert('That email address is invalid. Please check and try again.');
+            break;
+          case 'auth/weak-password':
+            alert('Password is too weak. Please use at least 6 characters.');
+            break;
+          default:
+            alert(error.message || 'Signup failed. Please try again.');
+        }
       });
   });
 }
 
-// 5) Login handler
+/* 5) Login handler (replace existing login handler) */
 if (loginBtn) {
   loginBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    const email = loginEmailInput?.value || '';
+    const email = loginEmailInput?.value?.trim() || '';
     const password = loginPasswordInput?.value || '';
 
     if (!email || !password) {
-      alert('Please enter email and password.');
+      alert('Please enter an email and password.');
       return;
     }
 
     auth.signInWithEmailAndPassword(email, password)
       .then((userCred) => {
         console.log('Signed in:', userCred.user.uid);
-        // On success we do nothing here; onAuthStateChanged below will run
+        // successful sign-in — redirect to dashboard
+        window.location.href = 'dashboard.html';
       })
       .catch((error) => {
         console.error(error);
-        alert(error.message);
+        switch (error.code) {
+          case 'auth/user-not-found':
+            alert('No account found with this email. Please sign up first.');
+            break;
+          case 'auth/wrong-password':
+            alert('Password is incorrect. Please try again.');
+            break;
+          case 'auth/invalid-email':
+            alert('That email address is invalid. Please check and try again.');
+            break;
+          case 'auth/too-many-requests':
+            alert('Too many attempts. Please try again later or reset your password.');
+            break;
+          default:
+            alert(error.message || 'Login failed. Please try again.');
+        }
       });
   });
 }
+
 
 // 6) Show/hide the Google Form link based on auth state
 auth.onAuthStateChanged((user) => {
