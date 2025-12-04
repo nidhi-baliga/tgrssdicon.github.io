@@ -12,11 +12,9 @@
 
         <title>TGRSSDICON 2026 | Login</title>
 
-        <!-- MEMBERSTACK SCRIPT (required for login/signup) -->
-        <script 
-            src="https://api.memberstack.io/static/memberstack.js?app=app_cmhlsa5wk006j0tnkhx5x13er" 
-            data-app="app_cmhlsa5wk006j0tnkhx5x13er">
-        </script>
+        <!-- Firebase (compat) -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
     </head>
     <body>
         <div class="login">
@@ -28,20 +26,20 @@
                 <div class="login__forms">
                     <form data-ms-form="login" action="" class="login__registre none" id="login-in">
                         <h1 class="login__title">Login</h1>
-    
+
                         <div class="login__box">
                             <i class='bx bx-at login__icon'></i>
-                            <input type="text" placeholder="Email" class="login__input">
+                            <input id="login-email" type="email" placeholder="Email" class="login__input">
                         </div>
-    
+
                         <div class="login__box">
                             <i class='bx bx-lock-alt login__icon'></i>
-                            <input type="password" placeholder="Password" class="login__input">
+                            <input id="login-password" type="password" placeholder="Password" class="login__input">
                         </div>
 
                         <a href="#" class="login__forgot">Forgot password?</a>
 
-                        <a href="#" class="login__button">Login</a>
+                        <a href="#" class="login__button" id="login-submit">Login</a>
 
                         <div>
                             <span class="login__account">Don't have an Account?</span>
@@ -51,29 +49,36 @@
 
                     <form data-ms-form="signup" action="" class="login__create" id="login-up">
                         <h1 class="login__title">Create Account</h1>
-    
+
                         <div class="login__box">
                             <i class='bx bx-user login__icon'></i>
-                            <input type="text" placeholder="Full Name" class="login__input">
+                            <input id="signup-name" type="text" placeholder="Full Name" class="login__input">
                         </div>
-    
+
                         <div class="login__box">
                             <i class='bx bx-at login__icon'></i>
-                            <input type="text" placeholder="Email" class="login__input">
+                            <input id="signup-email" type="email" placeholder="Email" class="login__input">
                         </div>
 
                         <div class="login__box">
                             <i class='bx bx-lock-alt login__icon'></i>
-                            <input type="password" placeholder="Password" class="login__input">
+                            <input id="signup-password" type="password" placeholder="Password" class="login__input">
                         </div>
 
-                        <a href="#" class="login__button">Create Account</a>
+                        <a href="#" class="login__button" id="signup-submit">Create Account</a>
 
                         <div>
                             <span class="login__account">Already have an Account?</span>
                             <span class="login__signup" id="sign-in">Log in</span>
                         </div>
                     </form>
+                    <a id="abstract-link"
+                        href="https://forms.gle/TTRQ2qnnayh447G69"
+                        class="login__button"
+                        style="display:none; margin-top:1rem;"
+                        target="_blank" rel="noopener">
+                        Go to Registration Form
+                    </a>
                 </div>
             </div>
         </div>
