@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Dashboard — TGRSSDI 2026</title>
+  <title>Dashboard — TGRSSDI</title>
 
   <!-- Styles: reuse your existing stylesheet if you want -->
   <link rel="stylesheet" href="styles.css">
@@ -12,6 +12,17 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
+  <style>
+    /* small local styles to make the dashboard clean */
+    body { font-family: var(--body-font); margin:0; padding:2rem; background:#fff; color:#111; }
+    .box { max-width:720px; margin:2rem auto; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.08); padding:2rem; }
+    .user-field { margin-bottom:1rem; font-size:1rem; }
+    .label { color:#666; font-size:0.85rem; margin-bottom:.25rem; display:block; }
+    .big-btn { display:inline-block; margin:0.5rem 0; padding:12px 18px; background:#024f6b; color:#fff; border-radius:8px; text-decoration:none; }
+    .ghost { background:#e9eef0; color:#024f6b; border: none; }
+    .top-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+    .small { font-size:0.9rem; color:#666; }
+  </style>
 </head>
 <body>
   <div class="box">
@@ -22,7 +33,7 @@
 
     <div id="user-info">
       <div class="user-field">
-        <span class="label">Full Name</span>
+        <span class="label">Full name</span>
         <div id="user-fullname" class="small">—</div>
       </div>
 
@@ -34,7 +45,7 @@
 
     <div style="margin-top:1.5rem;">
       <a id="fill-form" class="big-btn" target="_blank" rel="noopener">Fill Registration Form</a>
-      <a id="paper-poster" class="big-btn" style="margin-left:0.5rem;">Paper & Poster Submission</a>
+      <a id="paper-poster" class="big-btn" style="margin-left:0.5rem; display:none;">Paper & Poster Submission</a>
       <a id="back-home" class="big-btn ghost" style="margin-left:0.5rem;">Back to Home</a>
     </div>
   </div>
@@ -42,8 +53,8 @@
 <script>
   // 1) Firebase config — USE the same config you used in main.js
   const firebaseConfig = {
-    apiKey: "AIzaSyCb6I_YlWQGJJIiswMtowLdWoXXI1yU02k", 
-    authDomain: "tgrssdi-auth.firebaseapp.com",   // e.g. tgrssdi-auth.firebaseapp.com 
+    apiKey: "AIzaSyCb6I_YlWQGJJIiswMtowLdWoXXI1yU02k",
+    authDomain: "tgrssdi-auth.firebaseapp.com",   // e.g. tgrssdi-auth.firebaseapp.com
     projectId: "tgrssdi-auth",
     storageBucket: "tgrssdi-auth.firebasestorage.app",
     messagingSenderId: "1050877324976",
@@ -63,8 +74,8 @@
   const backHomeBtn = document.getElementById('back-home');
 
   // Set your Google Form URL and submission placeholder URL here:
-  fillFormBtn.href = 'hhttps://forms.gle/VbGUHJnMw4TgSBV19';
-  //paperPosterBtn.href = '#'; //placeholder
+  fillFormBtn.href = 'https://forms.gle/VbGUHJnMw4TgSBV19';
+  paperPosterBtn.href = '#'; // placeholder
 
   // Redirect to login if not authenticated
   auth.onAuthStateChanged(user => {
