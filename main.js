@@ -76,7 +76,29 @@ if (signupBtn) {
 
       const afterProfileUpdate = () => {
         // 🔽 Send data to Google Sheet (Option 2)
-        fetch('https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec', {
+          fetch('https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            secret: 'dDJNhj324_78374sbK_SBsdb249sf_QCd',
+            uid: user.uid,
+            name: name,
+            email: user.email,
+            createdAt: new Date().toISOString()
+          })
+        })
+        .then(res => {
+          console.log('Fetch completed, status:', res.status);
+          return res.text();
+        })
+        .then(text => {
+          console.log('Apps Script response:', text);
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+        });
+
+        /*fetch('https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -92,7 +114,7 @@ if (signupBtn) {
         .catch(err => console.error('Apps Script error:', err));
 
         //window.location.href = 'dashboard.html';
-      };
+      };*/
 
       if (name) {
         return user.updateProfile({ displayName: name })
@@ -178,6 +200,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 
 
 
