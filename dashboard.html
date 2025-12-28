@@ -41,6 +41,11 @@
         <span class="label">Email</span>
         <div id="user-email" class="small">—</div>
       </div>
+      
+      <div class="user-field" id="regno-field" style="display:none;">
+        <span class="label">Registration No.</span>
+        <div id="user-regno" class="small">—</div>
+      </div>
     </div>
 
     <div style="margin-top:1.5rem;">
@@ -77,6 +82,8 @@
   const fillFormBtn = document.getElementById('fill-form');
   const paperPosterBtn = document.getElementById('paper-poster');
   const backHomeBtn = document.getElementById('back-home');
+  const regNoField = document.getElementById('regno-field');
+  const regNoEl = document.getElementById('user-regno');
 
   // Set your Google Form URL and submission placeholder URL here:
   fillFormBtn.addEventListener('click', () => {
@@ -107,11 +114,20 @@ auth.onAuthStateChanged(user => {
     .then(data => {
       if (data.confirmed) {
         fillFormBtn.style.display = 'none';
-        messageEl.textContent =
-          `Your registration is successfully confirmed! Your registration no. is ${data.registrationNo}`;
+    
+        // Confirmation message (ONLY the sentence)
+        messageEl.textContent = 'Your registration is successfully confirmed!';
+    
+        // Show and populate registration number
+        regNoEl.textContent = data.registrationNo;
+        regNoField.style.display = 'block';
       } else {
         fillFormBtn.style.display = 'inline-block';
         messageEl.textContent = '';
+    
+        // Hide registration number for unconfirmed users
+        regNoField.style.display = 'none';
+        regNoEl.textContent = '—';
       }
     })
     .catch(err => {
@@ -137,6 +153,7 @@ auth.onAuthStateChanged(user => {
 </script>
 </body>
 </html>
+
 
 
 
