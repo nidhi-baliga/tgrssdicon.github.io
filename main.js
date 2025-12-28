@@ -91,9 +91,7 @@ if (signupBtn) {
         .then(text => console.log('Apps Script response:', text))
         .catch(err => console.error('Apps Script error:', err));
 
-        setTimeout(() => {
-  window.location.href = 'dashboard.html';
-}, 8000); // 8 seconds
+        //window.location.href = 'dashboard.html';
       };
 
       if (name) {
@@ -180,6 +178,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 
 
 
