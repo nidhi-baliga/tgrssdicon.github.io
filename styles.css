@@ -164,8 +164,25 @@ img{
   transition: .3s;
 }
 
+.login__button__ghost{
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin: 2rem 0;
+  background-color: #e9eef0;
+  color: #024f6b;
+  font-weight: 400;
+  text-align: center;
+  border-radius: .5rem;
+  transition: .3s;
+}
+
 .login__button:hover{
   background-color: var(--first-color-dark);
+}
+
+.login__button__ghost:hover{
+  background-color: var(--first-color-light);
 }
 
 .login__account, .login__signin, .login__signup{
