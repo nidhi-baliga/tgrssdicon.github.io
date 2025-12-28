@@ -54,6 +54,7 @@ const loginPasswordInput = document.getElementById('login-password');
 const loginBtn = document.getElementById('login-submit');
 
 const abstractLink = document.getElementById('abstract-link');
+const forgotPasswordLink = document.querySelector('.login__forgot');
 
 /* 4) Signup handler */
 if (signupBtn) {
@@ -179,6 +180,42 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
+/* ===== Password Reset ===== */
+if (forgotPasswordLink) {
+  forgotPasswordLink.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const email = loginEmailInput?.value?.trim();
+
+    if (!email) {
+      alert('Please enter your email address first, then click "Forgot password".');
+      return;
+    }
+
+    auth.sendPasswordResetEmail(email)
+      .then(() => {
+        alert('Password reset email sent. Check your inbox (and spam folder).');
+      })
+      .catch((error) => {
+        console.error('Password reset error:', error);
+
+        switch (error.code) {
+          case 'auth/user-not-found':
+            alert('No account exists with this email address.');
+            break;
+          case 'auth/invalid-email':
+            alert('The email address is invalid.');
+            break;
+          case 'auth/too-many-requests':
+            alert('Too many attempts. Please wait and try again later.');
+            break;
+          default:
+            alert('Unable to send reset email. Please try again later.');
+        }
+      });
+  });
+}
 
 
 
