@@ -22,6 +22,16 @@
     .ghost { background:#e9eef0; color:#024f6b; border: none; }
     .top-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
     .small { font-size:1.2rem; color:#222; font-weight: 400 }
+
+    /* Dashboard-only spacing fixes */
+    .box .login__button,
+    .box .login__button__ghost {
+      margin: 0.75rem 0;
+    }
+  
+    #registration-message {
+      margin: 0.5rem 0 0.75rem 0;
+    }
   </style>
 </head>
 <body>
@@ -153,6 +163,7 @@ auth.onAuthStateChanged(user => {
 </script>
 </body>
 </html>
+
 
 
 
