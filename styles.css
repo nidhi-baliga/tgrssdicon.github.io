@@ -289,3 +289,16 @@ button.login__button:focus {
   outline: none;
 }
 
+button.login__button__ghost {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  background-clip: padding-box;
+}
+
+button.login__button__ghost:focus {
+  outline: none;
+}
