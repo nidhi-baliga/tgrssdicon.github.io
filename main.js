@@ -68,20 +68,36 @@ if (signupBtn) {
       return;
     }
 
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCred) => {
-        console.log('Signed up:', userCred.user.uid);
-        // Save display name then redirect
-        if (name) {
-          return userCred.user.updateProfile({ displayName: name })
-            .then(() => {
-              // redirect after profile update
-              window.location.href = 'dashboard.html';
-            });
-        } else {
-          window.location.href = 'dashboard.html';
-        }
-      })
+    .then((userCred) => {
+      console.log('Signed up:', userCred.user.uid);
+
+      const user = userCred.user;
+
+      const afterProfileUpdate = () => {
+        // 🔽 Send data to Google Sheet (Option 2)
+        fetch('https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            secret: 'dDJNhj324_78374sbK_SBsdb249sf_QCd',
+            uid: user.uid,
+            name: name,
+            email: user.email,
+            createdAt: new Date().toISOString()
+          })
+        }).catch(() => {}); // fail silently
+
+        // Continue normal flow
+        window.location.href = 'dashboard.html';
+      };
+
+      if (name) {
+        return user.updateProfile({ displayName: name })
+          .then(afterProfileUpdate);
+      } else {
+        afterProfileUpdate();
+      }
+    })
       .catch((error) => {
         console.error(error);
         // Friendly messages by error code
