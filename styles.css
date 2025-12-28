@@ -251,3 +251,18 @@ img{
     bottom: -5.5rem;
   }
 }
+
+/* Normalize button styling to match anchor buttons */
+button.login__button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  background-clip: padding-box;
+}
+
+button.login__button:focus {
+  outline: none;
+}
