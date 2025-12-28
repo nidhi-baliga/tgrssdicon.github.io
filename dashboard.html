@@ -28,7 +28,7 @@
   <div class="box">
     <div class="top-row">
       <h2>TGRSSDI 2026 | Welcome</h2>
-      <div id="signout-wrap"><a href="#" id="logout-btn" class="big-btn ghost">Log out</a></div>
+      <div id="signout-wrap"><a href="#" id="logout-btn" class="login__button__ghost">Log out</a></div>
     </div>
 
     <div id="user-info">
@@ -44,12 +44,14 @@
     </div>
 
     <div style="margin-top:1.5rem;">
-      <a id="fill-form" class="big-btn" target="_blank" rel="noopener">Fill Registration Form</a>
-      <a id="paper-poster" class="big-btn" style="margin-left:0.5rem; display:none;">Submit Abstract</a>
-      <a id="back-home" class="big-btn ghost" style="margin-left:0.5rem;">Back to Home</a>
-    </div>
-    <div id="registration-message"
-     style="margin-top:1rem; font-weight:600; color:#024f6b;">
+      <button id="fill-form" class="login__button" type="button">Fill Registration Form</button>
+      <button id="paper-poster" class="login__button" type="button" style="margin-left:0.5rem; display:none;">Submit Abstract</button>
+
+      <div id="registration-message"
+       style="margin:1rem 0; font-weight:600; color:#024f6b;">
+      </div>
+
+      <button id="back-home" class="login__button__ghost" type="button">Back to Home</button>
     </div>
   </div>
 
@@ -77,8 +79,14 @@
   const backHomeBtn = document.getElementById('back-home');
 
   // Set your Google Form URL and submission placeholder URL here:
-  fillFormBtn.href = 'https://forms.gle/VbGUHJnMw4TgSBV19';
-  paperPosterBtn.href = '#'; // placeholder
+  fillFormBtn.addEventListener('click', () => {
+  window.open('https://forms.gle/VbGUHJnMw4TgSBV19', '_blank', 'noopener');
+  });
+
+  paperPosterBtn.addEventListener('click', () => {
+  // placeholder
+  alert('Abstract submission will open here.');
+  });
 
   // Redirect to login if not authenticated
   const messageEl = document.getElementById('registration-message');
@@ -129,5 +137,6 @@ auth.onAuthStateChanged(user => {
 </script>
 </body>
 </html>
+
 
 
