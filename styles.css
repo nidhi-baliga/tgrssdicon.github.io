@@ -153,6 +153,7 @@ img{
 
 .login__button{
   display: block;
+  width: 100%;
   padding: 1rem;
   margin: 2rem 0;
   background-color: var(--first-color);
@@ -267,6 +268,3 @@ button.login__button:focus {
   outline: none;
 }
 
-.login__button {
-  width: 100%;
-}
