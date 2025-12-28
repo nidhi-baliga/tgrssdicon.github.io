@@ -266,3 +266,7 @@ button.login__button {
 button.login__button:focus {
   outline: none;
 }
+
+.login__button {
+  width: 100%;
+}
