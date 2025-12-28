@@ -122,7 +122,7 @@ if (signupBtn) {
       } else {
         afterProfileUpdate();
       }
-    })
+    }
     .catch((error) => {
       console.error(error);
       switch (error.code) {
@@ -200,6 +200,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 
 
 
