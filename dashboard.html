@@ -17,18 +17,18 @@
     body { font-family: var(--body-font); margin:0; padding:2rem; background:#fff; color:#111; }
     .box { max-width:720px; margin:2rem auto; background:#fff; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.1); padding:2rem; }
     .user-field { margin-bottom:1rem; font-size:1rem; }
-    .label { color:#666; font-size:0.85rem; margin-bottom:.25rem; display:block; }
+    .label { color:#555; font-size:0.85rem; margin-bottom:.25rem; display:block; font-weight:600 }
     .big-btn { display:inline-block; margin:0.5rem 0; padding:12px 18px; background:#024f6b; color:#fff; border-radius:8px; text-decoration:none; }
     .ghost { background:#e9eef0; color:#024f6b; border: none; }
     .top-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
-    .small { font-size:0.9rem; color:#666; }
+    .small { font-size:1.2rem; color:#222; font-weight: 400 }
   </style>
 </head>
 <body>
   <div class="box">
     <div class="top-row">
       <h2>TGRSSDI 2026 | Welcome</h2>
-      <div id="signout-wrap"><button id="logout-btn" class="login__button__ghost">Log out</button></div>
+      <div id="signout-wrap"><button id="logout-btn" class="login__button__ghost" type="button">Log out</button></div>
     </div>
 
     <div id="user-info">
@@ -137,6 +137,7 @@ auth.onAuthStateChanged(user => {
 </script>
 </body>
 </html>
+
 
 
 
