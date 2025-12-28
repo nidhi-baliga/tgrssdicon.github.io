@@ -91,7 +91,7 @@ if (signupBtn) {
           console.log('POST sent to Apps Script');
 
           // TEMP: keep redirect commented while testing
-          // window.location.href = 'dashboard.html';
+          window.location.href = 'dashboard.html';
         };
 
         if (name) {
@@ -179,6 +179,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 
 
 
