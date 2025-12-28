@@ -45,8 +45,11 @@
 
     <div style="margin-top:1.5rem;">
       <a id="fill-form" class="big-btn" target="_blank" rel="noopener">Fill Registration Form</a>
-      <a id="paper-poster" class="big-btn" style="margin-left:0.5rem; display:none;">Paper & Poster Submission</a>
+      <a id="paper-poster" class="big-btn" style="margin-left:0.5rem; display:none;">Submit Abstract</a>
       <a id="back-home" class="big-btn ghost" style="margin-left:0.5rem;">Back to Home</a>
+    </div>
+    <div id="registration-message"
+     style="margin-top:1rem; font-weight:600; color:#024f6b;">
     </div>
   </div>
 
@@ -78,18 +81,37 @@
   paperPosterBtn.href = '#'; // placeholder
 
   // Redirect to login if not authenticated
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      // not signed in — redirect to login
-      window.location.href = 'index.html';
-      return;
-    }
-    // user signed in — show info
-    fullnameEl.textContent = user.displayName || '(Name not provided)';
-    emailEl.textContent = user.email || '(No email)';
+  const messageEl = document.getElementById('registration-message');
 
-    // Optionally make buttons visible here if hidden
-  });
+auth.onAuthStateChanged(user => {
+  if (!user) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  fullnameEl.textContent = user.displayName || '(Name not provided)';
+  emailEl.textContent = user.email || '(No email)';
+
+  const url = `https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec?action=checkRegistration&email=${encodeURIComponent(user.email)}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data.confirmed) {
+        fillFormBtn.style.display = 'none';
+        messageEl.textContent =
+          `Your registration is successfully confirmed! Your registration no. is ${data.registrationNo}`;
+      } else {
+        fillFormBtn.style.display = 'inline-block';
+        messageEl.textContent = '';
+      }
+    })
+    .catch(err => {
+      console.error('Registration check failed', err);
+      fillFormBtn.style.display = 'inline-block';
+      messageEl.textContent = '';
+    });
+});
 
   // Logout
   logoutBtn.addEventListener('click', (e) => {
@@ -107,4 +129,5 @@
 </script>
 </body>
 </html>
+
 
