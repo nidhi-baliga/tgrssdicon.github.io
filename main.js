@@ -86,7 +86,10 @@ if (signupBtn) {
             email: user.email,
             createdAt: new Date().toISOString()
           })
-        }).catch(() => {}); // fail silently
+        })
+        .then(res => res.text())
+        .then(text => console.log('Apps Script response:', text))
+        .catch(err => console.error('Apps Script error:', err));
 
         window.location.href = 'dashboard.html';
       };
@@ -175,4 +178,5 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 
