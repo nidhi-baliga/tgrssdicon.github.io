@@ -55,10 +55,11 @@ const loginBtn = document.getElementById('login-submit');
 
 const abstractLink = document.getElementById('abstract-link');
 
-/* 4) Signup handler (replace existing signup handler) */
+/* 4) Signup handler */
 if (signupBtn) {
   signupBtn.addEventListener('click', function (e) {
     e.preventDefault();
+
     const email = signupEmailInput?.value?.trim() || '';
     const password = signupPasswordInput?.value || '';
     const name = signupNameInput?.value?.trim() || '';
@@ -69,78 +70,56 @@ if (signupBtn) {
     }
 
     auth.createUserWithEmailAndPassword(email, password)
-    .then((userCred) => {
-      console.log('Signed up:', userCred.user.uid);
+      .then((userCred) => {
+        console.log('Signed up:', userCred.user.uid);
 
-      const user = userCred.user;
+        const user = userCred.user;
 
-      const afterProfileUpdate = () => {
-        // 🔽 Send data to Google Sheet (Option 2)
+        const afterProfileUpdate = () => {
           fetch('https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            secret: 'dDJNhj324_78374sbK_SBsdb249sf_QCd',
-            uid: user.uid,
-            name: name,
-            email: user.email,
-            createdAt: new Date().toISOString()
-          })
-        })
-        .then(res => {
-          console.log('Fetch completed, status:', res.status);
-          return res.text();
-        })
-        .then(text => {
-          console.log('Apps Script response:', text);
-        })
-        .catch(err => {
-          console.error('Fetch error:', err);
-        });
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+              secret: 'dDJNhj324_78374sbK_SBsdb249sf_QCd',
+              uid: user.uid,
+              name: name,
+              email: user.email,
+              createdAt: new Date().toISOString()
+            })
+          });
 
-        /*fetch('https://script.google.com/macros/s/AKfycbwREMjsRY9TLYhhXrOlqLv114QAhnTQzPWM4lzxFgmT8m49uiSt-IMY5yRgYSQjxWy_1A/exec', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            secret: 'dDJNhj324_78374sbK_SBsdb249sf_QCd',
-            uid: user.uid,
-            name: name,
-            email: user.email,
-            createdAt: new Date().toISOString()
-          })
-        })
-        .then(res => res.text())
-        .then(text => console.log('Apps Script response:', text))
-        .catch(err => console.error('Apps Script error:', err));
+          console.log('POST sent to Apps Script');
 
-        //window.location.href = 'dashboard.html';
-      };*/
+          // TEMP: keep redirect commented while testing
+          // window.location.href = 'dashboard.html';
+        };
 
-      if (name) {
-        return user.updateProfile({ displayName: name })
-          .then(afterProfileUpdate);
-      } else {
-        afterProfileUpdate();
-      }
-    }
-    .catch((error) => {
-      console.error(error);
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          alert('An account with this email already exists. Try logging in or using a different email.');
-          break;
-        case 'auth/invalid-email':
-          alert('That email address is invalid. Please check and try again.');
-          break;
-        case 'auth/weak-password':
-          alert('Password is too weak. Please use at least 6 characters.');
-          break;
-        default:
-          alert(error.message || 'Signup failed. Please try again.');
-      }
-    });
+        if (name) {
+          return user.updateProfile({ displayName: name })
+            .then(afterProfileUpdate);
+        } else {
+          afterProfileUpdate();
+        }
+      })
+      .catch((error) => {
+        console.error('Signup error:', error);
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            alert('An account with this email already exists.');
+            break;
+          case 'auth/invalid-email':
+            alert('Invalid email address.');
+            break;
+          case 'auth/weak-password':
+            alert('Password must be at least 6 characters.');
+            break;
+          default:
+            alert(error.message || 'Signup failed.');
+        }
+      });
   });
 }
+
 
 /* 5) Login handler (replace existing login handler) */
 if (loginBtn) {
@@ -200,6 +179,7 @@ auth.onAuthStateChanged((user) => {
     }
   }
 });
+
 
 
 
