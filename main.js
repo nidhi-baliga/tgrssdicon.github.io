@@ -68,6 +68,7 @@ if (signupBtn) {
       return;
     }
 
+    auth.createUserWithEmailAndPassword(email, password)
     .then((userCred) => {
       console.log('Signed up:', userCred.user.uid);
 
@@ -87,7 +88,6 @@ if (signupBtn) {
           })
         }).catch(() => {}); // fail silently
 
-        // Continue normal flow
         window.location.href = 'dashboard.html';
       };
 
@@ -98,23 +98,22 @@ if (signupBtn) {
         afterProfileUpdate();
       }
     })
-      .catch((error) => {
-        console.error(error);
-        // Friendly messages by error code
-        switch (error.code) {
-          case 'auth/email-already-in-use':
-            alert('An account with this email already exists. Try logging in or using a different email.');
-            break;
-          case 'auth/invalid-email':
-            alert('That email address is invalid. Please check and try again.');
-            break;
-          case 'auth/weak-password':
-            alert('Password is too weak. Please use at least 6 characters.');
-            break;
-          default:
-            alert(error.message || 'Signup failed. Please try again.');
-        }
-      });
+    .catch((error) => {
+      console.error(error);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          alert('An account with this email already exists. Try logging in or using a different email.');
+          break;
+        case 'auth/invalid-email':
+          alert('That email address is invalid. Please check and try again.');
+          break;
+        case 'auth/weak-password':
+          alert('Password is too weak. Please use at least 6 characters.');
+          break;
+        default:
+          alert(error.message || 'Signup failed. Please try again.');
+      }
+    });
   });
 }
 
