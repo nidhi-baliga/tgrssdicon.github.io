@@ -124,6 +124,7 @@ auth.onAuthStateChanged(user => {
     .then(data => {
       if (data.confirmed) {
         fillFormBtn.style.display = 'none';
+        paperPosterBtn.style.display = 'block';
     
         // Confirmation message (ONLY the sentence)
         messageEl.textContent = 'Your registration is successfully confirmed!';
@@ -133,6 +134,7 @@ auth.onAuthStateChanged(user => {
         regNoField.style.display = 'block';
       } else {
         fillFormBtn.style.display = 'inline-block';
+        paperPosterBtn.style.display = 'none';
         messageEl.textContent = '';
     
         // Hide registration number for unconfirmed users
@@ -163,6 +165,7 @@ auth.onAuthStateChanged(user => {
 </script>
 </body>
 </html>
+
 
 
 
